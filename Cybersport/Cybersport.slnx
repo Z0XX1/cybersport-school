@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Cybersport.Android/Cybersport.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="Cybersport.Desktop/Cybersport.Desktop.csproj" />
+  <Project Path="Cybersport/Cybersport.csproj" />
+</Solution>
