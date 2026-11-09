@@ -42,7 +42,7 @@ public static class DbSeed
             new Students
             {
                 FullName = "Сергей Мастеров",
-                Nickname = "Annie",
+                Nickname = "qCold",
                 MainGame = "CS2",
                 EnrollmentDate = new DateTime(2026, 11, 7)
             }
