@@ -1,18 +1,88 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="using:Cybersport.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:models="using:Cybersport.Data.Models"
              x:Class="Cybersport.Views.MainView"
              x:DataType="vm:MainViewModel">
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:MainViewModel />
-    </Design.DataContext>
 
-    <TextBox Text="{Binding Greeting}"
-             HorizontalAlignment="Center"
-             VerticalAlignment="Center" />
+	<Grid RowDefinitions="Auto,*" Margin="12" RowSpacing="12">
+		<StackPanel Grid.Row="0" Spacing="4">
+			<TextBlock Text="CyberBoost"
+                       FontSize="26"
+                       FontWeight="Bold" />
+		</StackPanel>
+		<TabControl Grid.Row="1">
+			<TabItem Header="Ученики">
+				<ListBox x:Name="StudentsList">
+					<ListBox.ItemTemplate>
+						<DataTemplate x:DataType="models:Students">
+							<StackPanel Margin="8" Spacing="4">
+								<TextBlock Text="{Binding FullName}"
+                                           FontWeight="Bold"
+                                           FontSize="16"
+                                           TextWrapping="Wrap" />
+
+								<TextBlock Text="{Binding Nickname,
+                                    StringFormat='Ник: {0}'}" />
+
+								<TextBlock Text="{Binding MainGame,
+                                    StringFormat='Игра: {0}'}" />
+
+								<TextBlock Text="{Binding Rank,
+                                    StringFormat='Ранг: {0}'}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="Тренеры">
+				<ListBox x:Name="CoachesList">
+					<ListBox.ItemTemplate>
+						<DataTemplate x:DataType="models:Coaches">
+							<StackPanel Margin="8" Spacing="4">
+								<TextBlock Text="{Binding FullName}"
+                                           FontWeight="Bold"
+                                           FontSize="16"
+                                           TextWrapping="Wrap" />
+
+								<TextBlock Text="{Binding Game,
+                                    StringFormat='Игра: {0}'}" />
+
+								<TextBlock Text="{Binding ExperienceYears,
+                                    StringFormat='Опыт: {0} лет'}" />
+
+								<TextBlock Text="{Binding IsActive,
+                                    StringFormat='Работает: {0}'}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+			<TabItem Header="Занятия">
+				<ListBox x:Name="LessonsList">
+					<ListBox.ItemTemplate>
+						<DataTemplate x:DataType="models:Lessons">
+							<StackPanel Margin="8" Spacing="4">
+								<TextBlock Text="{Binding StartDate,
+                                    StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+                                           FontWeight="Bold"
+                                           FontSize="16" />
+
+								<TextBlock Text="{Binding Student.FullName,
+                                    StringFormat='Ученик: {0}'}"
+                                           TextWrapping="Wrap" />
+
+								<TextBlock Text="{Binding Coach.FullName,
+                                    StringFormat='Тренер: {0}'}"
+                                           TextWrapping="Wrap" />
+
+								<TextBlock Text="{Binding DurationMinutes,
+                                    StringFormat='Длительность: {0} мин'}" />
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</TabItem>
+		</TabControl>
+	</Grid>
 </UserControl>
