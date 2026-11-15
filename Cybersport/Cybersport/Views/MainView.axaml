@@ -13,75 +13,172 @@
 		</StackPanel>
 		<TabControl Grid.Row="1">
 			<TabItem Header="Ученики">
-				<ListBox x:Name="StudentsList">
-					<ListBox.ItemTemplate>
-						<DataTemplate x:DataType="models:Students">
-							<StackPanel Margin="8" Spacing="4">
-								<TextBlock Text="{Binding FullName}"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           TextWrapping="Wrap" />
-
-								<TextBlock Text="{Binding Nickname,
-                                    StringFormat='Ник: {0}'}" />
-
-								<TextBlock Text="{Binding MainGame,
-                                    StringFormat='Игра: {0}'}" />
-
-								<TextBlock Text="{Binding Rank,
-                                    StringFormat='Ранг: {0}'}" />
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+				<ScrollViewer>
+					<StackPanel Spacing="8" Margin="6">
+						<TextBlock Text="Список учеников"
+								   FontSize="18" FontWeight="Bold"/>
+						<ListBox x:Name="StudentsList"
+								 Height="180"
+								 SelectionChanged="StudentsListSelectionChanged">
+							<ListBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Students">
+									<StackPanel Margin="6" Spacing="3">
+										<TextBlock Text="{Binding FullName}"
+												   FontWeight="Bold"/>
+										<TextBlock Text="{Binding Nickname,
+                                StringFormat='Ник: {0}'}"/>
+										<TextBlock Text="{Binding MainGame,
+                                StringFormat='Игра: {0}'}"/>
+										<TextBlock Text="{Binding Rank,
+                                StringFormat='Ранг: {0}'}"/>
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						<TextBlock Text="ФИО ученика"/>
+						<TextBox x:Name="StudentName"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Никнейм (необязательно)"/>
+						<TextBox x:Name="StudentNickname"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Основная игра"/>
+						<TextBox x:Name="StudentGame"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Ранг (необязательно)"/>
+						<TextBox x:Name="StudentRank"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Дата записи в школу"/>
+						<CalendarDatePicker x:Name="StudentDate"
+											MaxWidth="300"
+											HorizontalAlignment="Left"/>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button Content="Добавить"
+									Click="AddStudentClick"/>
+							<Button Content="Сохранить"
+									Click="SaveStudentClick"/>
+							<Button Content="Удалить"
+									Click="DeleteStudentClick"/>
+						</StackPanel>
+						<TextBlock x:Name="StudentMessage"
+								   TextWrapping="Wrap"/>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 			<TabItem Header="Тренеры">
-				<ListBox x:Name="CoachesList">
-					<ListBox.ItemTemplate>
-						<DataTemplate x:DataType="models:Coaches">
-							<StackPanel Margin="8" Spacing="4">
-								<TextBlock Text="{Binding FullName}"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           TextWrapping="Wrap" />
-
-								<TextBlock Text="{Binding Game,
-                                    StringFormat='Игра: {0}'}" />
-
-								<TextBlock Text="{Binding ExperienceYears,
-                                    StringFormat='Опыт: {0} лет'}" />
-
-								<TextBlock Text="{Binding IsActive,
-                                    StringFormat='Работает: {0}'}" />
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+				<ScrollViewer>
+					<StackPanel Spacing="8" Margin="6">
+						<TextBlock Text="Список тренеров"
+								   FontSize="18" FontWeight="Bold"/>
+						<ListBox x:Name="CoachesList" Height="180">
+							<ListBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Coaches">
+									<StackPanel Margin="6" Spacing="3">
+										<TextBlock Text="{Binding FullName}"
+												   FontWeight="Bold"/>
+										<TextBlock Text="{Binding Game,
+                                StringFormat='Игра: {0}'}"/>
+										<TextBlock Text="{Binding ExperienceYears,
+                                StringFormat='Опыт: {0} лет'}"/>
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						<TextBlock Text="ФИО тренера"/>
+						<TextBox x:Name="CoachName"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Игровая дисциплина"/>
+						<TextBox x:Name="CoachGame"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Опыт работы в годах"/>
+						<TextBox x:Name="CoachExperience"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<CheckBox x:Name="CoachActive"
+								  Content="Работает в школе"/>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button Content="Добавить"
+									Click="AddCoachClick"/>
+							<Button Content="Удалить"
+									Click="DeleteCoachClick"/>
+						</StackPanel>
+						<TextBlock x:Name="CoachMessage"
+								   TextWrapping="Wrap"/>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 			<TabItem Header="Занятия">
-				<ListBox x:Name="LessonsList">
-					<ListBox.ItemTemplate>
-						<DataTemplate x:DataType="models:Lessons">
-							<StackPanel Margin="8" Spacing="4">
-								<TextBlock Text="{Binding StartDate,
-                                    StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
-                                           FontWeight="Bold"
-                                           FontSize="16" />
-
-								<TextBlock Text="{Binding Student.FullName,
-                                    StringFormat='Ученик: {0}'}"
-                                           TextWrapping="Wrap" />
-
-								<TextBlock Text="{Binding Coach.FullName,
-                                    StringFormat='Тренер: {0}'}"
-                                           TextWrapping="Wrap" />
-
-								<TextBlock Text="{Binding DurationMinutes,
-                                    StringFormat='Длительность: {0} мин'}" />
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+				<ScrollViewer>
+					<StackPanel Spacing="8" Margin="6">
+						<TextBlock Text="Список занятий"
+								   FontSize="18" FontWeight="Bold"/>
+						<ListBox x:Name="LessonsList" Height="180">
+							<ListBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Lessons">
+									<StackPanel Margin="6" Spacing="3">
+										<TextBlock Text="{Binding StartDate,
+                                StringFormat='{}{0:dd.MM.yyyy HH:mm}'}"
+												   FontWeight="Bold"/>
+										<TextBlock Text="{Binding Student.FullName,
+                                StringFormat='Ученик: {0}'}"/>
+										<TextBlock Text="{Binding Coach.FullName,
+                                StringFormat='Тренер: {0}'}"/>
+										<TextBlock Text="{Binding DurationMinutes,
+                                StringFormat='Длительность: {0} мин'}"/>
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						<TextBlock Text="Выберите ученика"/>
+						<ComboBox x:Name="LessonStudent"
+								  MaxWidth="300"
+								  HorizontalAlignment="Left">
+							<ComboBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Students">
+									<TextBlock Text="{Binding FullName}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+						<TextBlock Text="Выберите тренера"/>
+						<ComboBox x:Name="LessonCoach"
+								  MaxWidth="300"
+								  HorizontalAlignment="Left">
+							<ComboBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Coaches">
+									<TextBlock Text="{Binding FullName}"/>
+								</DataTemplate>
+							</ComboBox.ItemTemplate>
+						</ComboBox>
+						<TextBlock Text="Дата занятия"/>
+						<CalendarDatePicker x:Name="LessonDate"
+											MaxWidth="300"
+											HorizontalAlignment="Left"/>
+						<TextBlock Text="Время занятия"/>
+						<TimePicker x:Name="LessonTime"
+									ClockIdentifier="24HourClock"
+									MaxWidth="300"
+									HorizontalAlignment="Left"/>
+						<TextBlock Text="Длительность в минутах"/>
+						<TextBox x:Name="LessonDuration"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<CheckBox x:Name="LessonCompleted"
+								  Content="Занятие проведено"/>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button Content="Добавить"
+									Click="AddLessonClick"/>
+							<Button Content="Удалить"
+									Click="DeleteLessonClick"/>
+						</StackPanel>
+						<TextBlock x:Name="LessonMessage"
+								   TextWrapping="Wrap"/>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 		</TabControl>
 	</Grid>
