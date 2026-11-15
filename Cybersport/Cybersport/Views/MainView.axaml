@@ -4,7 +4,37 @@
              xmlns:models="using:Cybersport.Data.Models"
              x:Class="Cybersport.Views.MainView"
              x:DataType="vm:MainViewModel">
+	<UserControl.Styles>
+		<Style Selector="TextBox">
+			<Setter Property="MinHeight" Value="44"/>
+		</Style>
 
+		<Style Selector="Button">
+			<Setter Property="MinHeight" Value="44"/>
+			<Setter Property="MaxWidth" Value="300"/>
+			<Setter Property="HorizontalAlignment" Value="Stretch"/>
+		</Style>
+
+		<Style Selector="ComboBox">
+			<Setter Property="MinHeight" Value="44"/>
+		</Style>
+
+		<Style Selector="CalendarDatePicker">
+			<Setter Property="MinHeight" Value="44"/>
+		</Style>
+
+		<Style Selector="TimePicker">
+			<Setter Property="MinHeight" Value="44"/>
+		</Style>
+
+		<Style Selector="CheckBox">
+			<Setter Property="MinHeight" Value="44"/>
+		</Style>
+
+		<Style Selector="TextBlock">
+			<Setter Property="TextWrapping" Value="Wrap"/>
+		</Style>
+	</UserControl.Styles>
 	<Grid RowDefinitions="Auto,*" Margin="12" RowSpacing="12">
 		<StackPanel Grid.Row="0" Spacing="4">
 			<TextBlock Text="CyberBoost"
@@ -38,24 +68,24 @@
 						<TextBlock Text="ФИО ученика"/>
 						<TextBox x:Name="StudentName"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Никнейм (необязательно)"/>
 						<TextBox x:Name="StudentNickname"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Основная игра"/>
 						<TextBox x:Name="StudentGame"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Ранг (необязательно)"/>
 						<TextBox x:Name="StudentRank"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Дата записи в школу"/>
 						<CalendarDatePicker x:Name="StudentDate"
 											MaxWidth="300"
-											HorizontalAlignment="Left"/>
-						<StackPanel Orientation="Horizontal" Spacing="8">
+											HorizontalAlignment="Stretch"/>
+						<StackPanel Orientation="Vertical" Spacing="8">
 							<Button Content="Добавить"
 									Click="AddStudentClick"/>
 							<Button Content="Сохранить"
@@ -90,18 +120,18 @@
 						<TextBlock Text="ФИО тренера"/>
 						<TextBox x:Name="CoachName"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Игровая дисциплина"/>
 						<TextBox x:Name="CoachGame"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Опыт работы в годах"/>
 						<TextBox x:Name="CoachExperience"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<CheckBox x:Name="CoachActive"
 								  Content="Работает в школе"/>
-						<StackPanel Orientation="Horizontal" Spacing="8">
+						<StackPanel Orientation="Vertical" Spacing="8">
 							<Button Content="Добавить"
 									Click="AddCoachClick"/>
 							<Button Content="Удалить"
@@ -137,7 +167,7 @@
 						<TextBlock Text="Выберите ученика"/>
 						<ComboBox x:Name="LessonStudent"
 								  MaxWidth="300"
-								  HorizontalAlignment="Left">
+								  HorizontalAlignment="Stretch">
 							<ComboBox.ItemTemplate>
 								<DataTemplate x:DataType="models:Students">
 									<TextBlock Text="{Binding FullName}"/>
@@ -147,7 +177,7 @@
 						<TextBlock Text="Выберите тренера"/>
 						<ComboBox x:Name="LessonCoach"
 								  MaxWidth="300"
-								  HorizontalAlignment="Left">
+								  HorizontalAlignment="Stretch">
 							<ComboBox.ItemTemplate>
 								<DataTemplate x:DataType="models:Coaches">
 									<TextBlock Text="{Binding FullName}"/>
@@ -157,19 +187,19 @@
 						<TextBlock Text="Дата занятия"/>
 						<CalendarDatePicker x:Name="LessonDate"
 											MaxWidth="300"
-											HorizontalAlignment="Left"/>
+											HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Время занятия"/>
 						<TimePicker x:Name="LessonTime"
 									ClockIdentifier="24HourClock"
 									MaxWidth="300"
-									HorizontalAlignment="Left"/>
+									HorizontalAlignment="Stretch"/>
 						<TextBlock Text="Длительность в минутах"/>
 						<TextBox x:Name="LessonDuration"
 								 MaxWidth="300"
-								 HorizontalAlignment="Left"/>
+								 HorizontalAlignment="Stretch"/>
 						<CheckBox x:Name="LessonCompleted"
 								  Content="Занятие проведено"/>
-						<StackPanel Orientation="Horizontal" Spacing="8">
+						<StackPanel Orientation="Vertical" Spacing="8">
 							<Button Content="Добавить"
 									Click="AddLessonClick"/>
 							<Button Content="Удалить"

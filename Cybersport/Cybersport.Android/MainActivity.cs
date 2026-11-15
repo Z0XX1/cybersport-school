@@ -6,7 +6,7 @@ using Avalonia.Android;
 namespace Cybersport.Android;
 
 [Activity(
-    Label = "Cybersport.Android",
+    Label = "CyberBoost",
     Theme = "@style/MyTheme.NoActionBar",
     Icon = "@drawable/icon",
     MainLauncher = true,
