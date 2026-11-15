@@ -184,4 +184,76 @@ public partial class MainView : UserControl
         StudentRank.Text = student.Rank;
         StudentDate.SelectedDate = student.EnrollmentDate;
     }
+
+    private void AddCoachClick(object? sender, RoutedEventArgs e)
+    {
+        string name = CoachName.Text?.Trim() ?? "";
+        string game = CoachGame.Text?.Trim() ?? "";
+        if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(game))
+        {
+            CoachMessage.Text = "Заполните ФИО и игру";
+            return;
+        }
+
+        if (!int.TryParse(CoachExperience.Text, out int years) || years < 0)
+        {
+            CoachMessage.Text = "Введите корректный опыт";
+            return;
+        }
+
+        try
+        {
+            using var db = new AppDbContext();
+            db.Coaches.Add(new Coaches
+            {
+                FullName = name,
+                Game = game,
+                ExperienceYears = years,
+                IsActive = CoachActive.IsChecked == true
+            });
+
+            db.SaveChanges();
+            RefreshLists();
+            CoachName.Text = "";
+            CoachGame.Text = "";
+            CoachExperience.Text = "";
+            CoachActive.IsChecked = false;
+            CoachMessage.Text = "Тренер добавлен";
+        }
+        catch (Exception ex)
+        {
+            CoachMessage.Text = "Ошибка: " + ex.Message;
+        }
+    }
+
+    private void DeleteCoachClick(object? sender, RoutedEventArgs e)
+    {
+        if (CoachesList.SelectedItem is not Coaches selected)
+        {
+            CoachMessage.Text = "Сначала выберите тренера";
+            return;
+        }
+
+        try
+        {
+            using var db = new AppDbContext();
+            var coach = db.Coaches.Find(selected.Id);
+            if (coach == null)
+            {
+                CoachMessage.Text = "Тренер не найден";
+                return;
+            }
+
+            db.Lessons.RemoveRange(db.Lessons.Where(x => x.CoachId == coach.Id));
+            db.Coaches.Remove(coach);
+            db.SaveChanges();
+            RefreshLists();
+
+            CoachMessage.Text = "Тренер и связанные с ним занятия удалены.";
+        }
+        catch (Exception ex)
+        {
+            CoachMessage.Text = "Ошибка: " + ex.Message;
+        }
+    }
 }

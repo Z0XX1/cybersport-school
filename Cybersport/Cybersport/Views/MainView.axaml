@@ -69,27 +69,48 @@
 				</ScrollViewer>
 			</TabItem>
 			<TabItem Header="Тренеры">
-				<ListBox x:Name="CoachesList">
-					<ListBox.ItemTemplate>
-						<DataTemplate x:DataType="models:Coaches">
-							<StackPanel Margin="8" Spacing="4">
-								<TextBlock Text="{Binding FullName}"
-                                           FontWeight="Bold"
-                                           FontSize="16"
-                                           TextWrapping="Wrap" />
-
-								<TextBlock Text="{Binding Game,
-                                    StringFormat='Игра: {0}'}" />
-
-								<TextBlock Text="{Binding ExperienceYears,
-                                    StringFormat='Опыт: {0} лет'}" />
-
-								<TextBlock Text="{Binding IsActive,
-                                    StringFormat='Работает: {0}'}" />
-							</StackPanel>
-						</DataTemplate>
-					</ListBox.ItemTemplate>
-				</ListBox>
+				<ScrollViewer>
+					<StackPanel Spacing="8" Margin="6">
+						<TextBlock Text="Список тренеров"
+								   FontSize="18" FontWeight="Bold"/>
+						<ListBox x:Name="CoachesList" Height="180">
+							<ListBox.ItemTemplate>
+								<DataTemplate x:DataType="models:Coaches">
+									<StackPanel Margin="6" Spacing="3">
+										<TextBlock Text="{Binding FullName}"
+												   FontWeight="Bold"/>
+										<TextBlock Text="{Binding Game,
+                                StringFormat='Игра: {0}'}"/>
+										<TextBlock Text="{Binding ExperienceYears,
+                                StringFormat='Опыт: {0} лет'}"/>
+									</StackPanel>
+								</DataTemplate>
+							</ListBox.ItemTemplate>
+						</ListBox>
+						<TextBlock Text="ФИО тренера"/>
+						<TextBox x:Name="CoachName"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Игровая дисциплина"/>
+						<TextBox x:Name="CoachGame"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<TextBlock Text="Опыт работы в годах"/>
+						<TextBox x:Name="CoachExperience"
+								 MaxWidth="300"
+								 HorizontalAlignment="Left"/>
+						<CheckBox x:Name="CoachActive"
+								  Content="Работает в школе"/>
+						<StackPanel Orientation="Horizontal" Spacing="8">
+							<Button Content="Добавить"
+									Click="AddCoachClick"/>
+							<Button Content="Удалить"
+									Click="DeleteCoachClick"/>
+						</StackPanel>
+						<TextBlock x:Name="CoachMessage"
+								   TextWrapping="Wrap"/>
+					</StackPanel>
+				</ScrollViewer>
 			</TabItem>
 			<TabItem Header="Занятия">
 				<ListBox x:Name="LessonsList">
