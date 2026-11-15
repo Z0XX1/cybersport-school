@@ -25,16 +25,19 @@ public partial class MainView : UserControl
     private void RefreshLists()
     {
         using var db = new AppDbContext();
-        StudentsList.ItemsSource = db.Students
+        var students = db.Students
+            .AsNoTracking()
+            .OrderBy(x => x.Id)
+            .ToList();
+        var coaches = db.Coaches
             .AsNoTracking()
             .OrderBy(x => x.Id)
             .ToList();
 
-        CoachesList.ItemsSource = db.Coaches
-            .AsNoTracking()
-            .OrderBy(x => x.Id)
-            .ToList();
-
+        StudentsList.ItemsSource = students;
+        CoachesList.ItemsSource = coaches;
+        LessonStudent.ItemsSource = students;
+        LessonCoach.ItemsSource = coaches;
         LessonsList.ItemsSource = db.Lessons
             .AsNoTracking()
             .Include(x => x.Student)
@@ -42,6 +45,7 @@ public partial class MainView : UserControl
             .OrderBy(x => x.StartDate)
             .ToList();
     }
+
 
     private bool ReadStudentInput(out Students student)
     {
@@ -249,11 +253,91 @@ public partial class MainView : UserControl
             db.SaveChanges();
             RefreshLists();
 
-            CoachMessage.Text = "Тренер и связанные с ним занятия удалены.";
+            CoachMessage.Text = "Тренер и связанные с ним занятия удалены";
         }
         catch (Exception ex)
         {
             CoachMessage.Text = "Ошибка: " + ex.Message;
+        }
+    }
+
+    private void AddLessonClick(object? sender, RoutedEventArgs e)
+    {
+        if (LessonStudent.SelectedItem is not Students student || LessonCoach.SelectedItem is not Coaches coach)
+        {
+            LessonMessage.Text = "Выберите ученика и тренера";
+            return;
+        }
+
+        if (LessonDate.SelectedDate is not DateTime date)
+        {
+            LessonMessage.Text = "Выберите дату занятия";
+            return;
+        }
+
+        if (!int.TryParse(LessonDuration.Text, out int duration) || duration <= 0)
+        {
+            LessonMessage.Text = "Введите правильную длительность";
+            return;
+        }
+
+        DateTime startDate = date.Date.Add(LessonTime.SelectedTime ?? TimeSpan.Zero);
+
+        try
+        {
+            using var db = new AppDbContext();
+            db.Lessons.Add(new Lessons
+            {
+                StudentId = student.Id,
+                CoachId = coach.Id,
+                StartDate = startDate,
+                DurationMinutes = duration,
+                IsCompleted = LessonCompleted.IsChecked == true
+            });
+
+            db.SaveChanges();
+            RefreshLists();
+            LessonStudent.SelectedItem = null;
+            LessonCoach.SelectedItem = null;
+            LessonDate.SelectedDate = null;
+            LessonTime.SelectedTime = null;
+            LessonDuration.Text = "";
+            LessonCompleted.IsChecked = false;
+            LessonMessage.Text = "Занятие добавлено";
+        }
+        catch (Exception ex)
+        {
+            LessonMessage.Text = "Ошибка: " + ex.Message;
+        }
+    }
+
+    private void DeleteLessonClick(object? sender, RoutedEventArgs e)
+    {
+        if (LessonsList.SelectedItem is not Lessons selected)
+        {
+            LessonMessage.Text = "Сначала выберите занятие";
+            return;
+        }
+
+        try
+        {
+            using var db = new AppDbContext();
+            var lesson = db.Lessons.Find(selected.Id);
+
+            if (lesson == null)
+            {
+                LessonMessage.Text = "Занятие не найдено";
+                return;
+            }
+
+            db.Lessons.Remove(lesson);
+            db.SaveChanges();
+            RefreshLists();
+            LessonMessage.Text = "Занятие удалено";
+        }
+        catch (Exception ex)
+        {
+            LessonMessage.Text = "Ошибка: " + ex.Message;
         }
     }
 }
